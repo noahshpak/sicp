@@ -4,7 +4,7 @@
 
 ; rather than have the check be absolute, we
 ; can check that the next guess is at least some 
-; large-enough step difference. This helps for small numbers
+; large-enough relative step. This helps for small numbers
 ; because if we fix epsilon to 0.001, 
 ; any x << epsilon will be extremely inaccurate
 ; for large numbers, epsilon could be too small for the 
