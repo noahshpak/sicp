@@ -1,46 +1,24 @@
-; iterative exponentiation by factoring
-; (b^(n/2))^2 = (b^2)^(n/2)
-
-(define (square x) (* x x))
+(define (double x) (* x 2))
+(define (halve x) (/ x 2))
 (define (even? x) (= (remainder x 2) 0))
 
+; a * b = \sum_{i=1}^{b} a = 2 * \sum_{i=1}^{b/2} a = 4 * \sum_{i=1}^{b/4} a
 
-
-(define (fast-expt b n)
-    (cond 
-        ((= n 0) 1)
-        ((even? n) (square (fast-expt b (/ n 2))))
-        (else (* b (fast-expt b (- n 1))))
-    )
-)
-
-(define (fast-expt b n)
-    (define (fast-expt-helper b n a)
-        (cond
-            ((= n 0) a)
-            ((even? n) (fast-expt-helper (square b) (/ n 2) a))
-            (else (fast-expt-helper b (- n 1) (* b a)))
+(define (fast-mult a b) 
+    (define (fast-mult-helper a b acc) 
+        (cond 
+            ((= b 1) (+ acc a))
+            ((even? b) (fast-mult-helper (double a) (halve b) acc))
+            (else (fast-mult-helper a (- b 1) (+ acc a)))
         )
     )
-    (fast-expt-helper b n 1)
+    (fast-mult-helper a b 0)
 )
 
-(fast-expt 2 2)
-(fast-expt 2 3)
-(fast-expt 2 4)
-(fast-expt 2 5)
-(fast-expt 2 6)
-(fast-expt 2 7)
-(fast-expt 2 8)
-(fast-expt 2 9)
-(fast-expt 2 10)
-(fast-expt 2 100)
-(fast-expt 2 1000)
-
-(fast-expt 3 0)
-(fast-expt 3 1)
-(fast-expt 3 2)
-(fast-expt 3 3)
-(fast-expt 3 4)
-(fast-expt 3 5)
-
+(fast-mult 3 5)
+(fast-mult 3 7)
+(fast-mult 3 8)
+(fast-mult 3 9)
+(fast-mult 13 9)
+(fast-mult 23 9)
+(fast-mult 33 9)
